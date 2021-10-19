@@ -18,9 +18,9 @@ const stage = [
   [0,2,2,0,0,0,2,2,2,2,0,0,2,2,0],
   [0,0,2,2,2,2,2,0,0,2,0,0,2,0,0],
   [0,0,2,0,0,0,2,2,0,2,2,2,2,0,0],
-  [0,0,2,2,2,0,0,2,0,0,0,2,0,0,0],
-  [0,2,2,0,2,0,0,2,0,0,0,2,0,0,0],
-  [0,0,2,0,0,0,2,2,2,0,0,2,2,2,0],
+  [0,0,2,2,2,0,0,2,0,2,0,2,0,0,0],
+  [0,2,2,0,2,0,0,2,0,2,0,2,0,0,0],
+  [0,0,2,0,0,0,2,2,2,2,0,2,2,2,0],
   [0,2,2,2,0,0,2,0,0,0,0,0,0,2,0],
   [0,2,2,2,0,0,2,0,0,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -58,6 +58,7 @@ class Character {
         if (this.heal === 0) {
             alert('DEAD');
             this.heal = 3;
+            respawnEnemies();
         }
         loadObjectives();
     }
@@ -113,10 +114,16 @@ class Enemy {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.initX = this.x;
+        this.initY = this.y;
         this.delayCounter = 0;
     }
     wallFound(posX, posY) {
         return stage[posY][posX] === wall;
+    }
+    reSpawn() {
+        this.x = this.initX;
+        this.y = this.initY;
     }
     randMove() {
         mainCharacter.enemyFound(this.x, this.y);
@@ -197,8 +204,14 @@ function runGame() {
 function loadEnemies() {
     enemies.push(new Enemy(3, 4));
     enemies.push(new Enemy(5, 6));
-    enemies.push(new Enemy(7, 6));
+    enemies.push(new Enemy(12, 2));
     enemies.push(new Enemy(12, 6));
+}
+
+function respawnEnemies() {
+    enemies.forEach( enemy => {
+        enemy.reSpawn();
+    });
 }
 
 function loadDecorations() {
@@ -242,7 +255,7 @@ class Torch {
         canvasContext.drawImage(tileMap, 0*tilePixels, 2*tilePixels, tilePixels, tilePixels, this.x*square.width, this.y*square.height, square.width, square.height);
     }
     animate() {
-        const frames = FPS/5;
+        const frames = FPS/6;
         this.delayCounter++;
         switch (this.delayCounter) {
             case frames/4:
