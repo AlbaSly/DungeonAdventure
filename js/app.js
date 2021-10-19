@@ -25,6 +25,7 @@ const stage = [
   [0,2,2,2,0,0,2,0,0,2,2,2,2,2,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
+//posiciones de los tiles en el tilemap.png
 const wall = 0;
 const door = 1;
 const road = 2;
