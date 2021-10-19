@@ -204,7 +204,7 @@ function runGame() {
 
 function loadEnemies() {
     enemies.push(new Enemy(3, 4));
-    enemies.push(new Enemy(5, 6));
+    enemies.push(new Enemy(6, 6));
     enemies.push(new Enemy(12, 2));
     enemies.push(new Enemy(12, 6));
 }
